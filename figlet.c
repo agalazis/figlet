@@ -60,6 +60,9 @@
 #include <stdio.h>
 #ifdef __STDC__
 #include <stdlib.h>
+#include <math.h>
+#include <stdlib.h> //defines rand()
+#include <time.h> //defines time() and is needed for randomize()
 #endif
 #include <string.h>
 #include <ctype.h>
@@ -1545,6 +1548,20 @@ inchr c;
 void putstring(string)
 outchr *string;
 {
+int color1=random()%7 +2;
+
+int tone=random()%2;
+int color2;
+if (tone)
+  color2=3;
+else
+  color2=9;
+if (color1==5)
+  if (tone)
+    color1++;
+  else
+    color1--;
+    printf("\033[%i%im",color2,color1);
   int i,len;
   char c[10];
 #ifdef TLF_FONTS
@@ -1594,7 +1611,7 @@ outchr *string;
 void printline()
 {
   int i;
-
+  srand(time(NULL)); 
   for (i=0;i<charheight;i++) {
     putstring(outputline[i]);
     }
@@ -2010,7 +2027,7 @@ char *argv[];
 ---------------------------------------------------------------------------*/
   int wordbreakmode;
   int char_not_added;
-
+  printf("\033[5m");
   Myargc = argc;
   Myargv = argv;
   getparams();
